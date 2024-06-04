@@ -183,15 +183,34 @@ class LazySupervisedDataset(Dataset):
         data_args: DataArguments,
     ):
         super(LazySupervisedDataset, self).__init__()
-        
-        list_data_dict = json.load(open(data_path, "r"))
+
+        list_data_dict = []
+
+        if ".jsonl" in data_path:
+            with open(data_path, 'r') as file:
+                for line in file:
+                    list_data_dict.append(json.loads(line.strip()))
+        else:
+            list_data_dict = json.load(open(data_path, "r"))
 
         from pathlib import Path
 
         print("Formatting inputs...Skip in lazy mode")
         self.tokenizer = tokenizer
-        self.list_data_dict = [i for i in list_data_dict if Path(data_args.image_folder, i['image']).is_file()]
+
+        all_image_paths = self.get_all_image_paths(data_args.image_folder)
+        self.list_data_dict = [i for i in list_data_dict if i['image'] in all_image_paths]
+
         self.data_args = data_args
+
+    def get_all_image_paths(self, image_folder):
+        image_paths = {}
+        for root, dirs, files in os.walk(image_folder):
+            for file in files:
+                if file in image_paths:
+                    raise ValueError(f"Duplicate image file name found: {file}")
+                image_paths[file] = os.path.join(root, file)
+        return image_paths
 
     def __len__(self):
         return len(self.list_data_dict)
@@ -213,6 +232,19 @@ class LazySupervisedDataset(Dataset):
             length_list.append(cur_len)
         return length_list
 
+    def find_image_in_subfolders(self, image_folder, image_file):
+        image_paths = {}
+        for root, dirs, files in os.walk(image_folder):
+            for file in files:
+                if file in image_paths:
+                    raise ValueError(f"Duplicate image file name found: {file}")
+                image_paths[file] = os.path.join(root, file)
+
+        if image_file not in image_paths:
+            raise FileNotFoundError(f"Image file {image_file} not found in {image_folder} or its subdirectories.")
+
+        return image_paths[image_file]
+
     def __getitem__(self, i) -> Dict[str, torch.Tensor]:
         sources = self.list_data_dict[i]
         if isinstance(i, int):
@@ -222,7 +254,8 @@ class LazySupervisedDataset(Dataset):
             image_file = self.list_data_dict[i]['image']
             image_folder = self.data_args.image_folder
             processor = self.data_args.image_processor
-            image = Image.open(os.path.join(image_folder, image_file)).convert('RGB')
+            image_path = self.find_image_in_subfolders(image_folder, image_file)
+            image = Image.open(image_path).convert('RGB')
             if self.data_args.image_aspect_ratio == 'pad':
                 def expand2square(pil_img, background_color):
                     width, height = pil_img.size

@@ -9,10 +9,10 @@ python train_llava.py \
     --mm_vision_select_layer -2 \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_feature patch \
-    --data_path ./dataset/llava_pretrain_blip_laion_cc_sbu_558k_ja.json \
+    --data_path ./dataset/llava_pretrain_stair.json \
     --lazy_preprocess False \
     --is_multimodal True \
-    --image_folder ~/datasets/images \
+    --image_folder ./dataset/images \
     --image_aspect_ratio square \
     --optim adamw_torch \
     --double_quant True \
