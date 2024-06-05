@@ -1,5 +1,10 @@
 # リポジトリについて
-[LLaVA-JP](https://github.com/tosiyuki/LLaVA-JP)に変更を加えたリポジトリです。tosiyuki様に感謝します。
+[LLaVA-JP](https://github.com/tosiyuki/LLaVA-JP)に変更を加えたリポジトリです。tosiyuki様に感謝します。  
+主な変更点は以下のとおりです。  
+- データ準備用スクリプト追加
+- wandbとの連携
+- docker関連ファイルの追加
+- データ読み込みの周りの調整
 
 # 使い方
 ## インストール
@@ -33,7 +38,7 @@ bash prepare_datasets.sh
 ```
 bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0.sh
 ```
-マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
+マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）(未検証)
 ```
 bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0_accelerate.sh
 ```
@@ -45,7 +50,7 @@ bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0_accelerate.sh
 ```
 bash scripts/finetune/finetune_llm-jp-1.3b-v1.0.sh
 ```
-マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
+マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）(未検証)
 ```
 bash scripts/finetune/finetune_llm-jp-1.3b-v1.0_accelerate.sh
 ```
