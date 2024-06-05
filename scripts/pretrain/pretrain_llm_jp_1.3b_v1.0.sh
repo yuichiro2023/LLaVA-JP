@@ -12,7 +12,7 @@ python train_llava.py \
     --data_path ./dataset/llava_pretrain_stair.json \
     --lazy_preprocess False \
     --is_multimodal True \
-    --image_folder ./dataset/images \
+    --image_folder ./dataset/images/stage1 \
     --image_aspect_ratio square \
     --optim adamw_torch \
     --double_quant True \
@@ -24,12 +24,12 @@ python train_llava.py \
     --bf16 True \
     --output_dir ./output_llava/checkpoints/pretrain-llava-jp-1.3b-v1-siglip-so400m-patch14-384 \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 8 \
+    --per_device_train_batch_size 12 \
     --per_device_eval_batch_size 4 \
-    --gradient_accumulation_steps 4 \
+    --gradient_accumulation_steps 2 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
-    --save_steps 24000 \
+    --save_steps 2000 \
     --save_total_limit 1 \
     --learning_rate 1e-3 \
     --weight_decay 0. \
@@ -37,5 +37,8 @@ python train_llava.py \
     --logging_steps 1 \
     --model_max_length 1532 \
     --gradient_checkpointing True \
-    --dataloader_num_workers 16 \
-    --lr_scheduler_type "cosine"
+    --dataloader_num_workers 8 \
+    --lr_scheduler_type "cosine" \
+    --use_wandb \
+    --wandb_project llava-jp-test \
+    --wandb_name llm_jp_v1_0

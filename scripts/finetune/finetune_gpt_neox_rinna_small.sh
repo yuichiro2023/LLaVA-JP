@@ -40,4 +40,7 @@ python train_llava.py \
     --model_max_length 2048 \
     --gradient_checkpointing True \
     --dataloader_num_workers 16 \
-    --lr_scheduler_type "cosine"
+    --lr_scheduler_type "cosine" \
+    --use_wandb \
+    --wandb_project llava-jp-finetune-test \
+    --wandb_name rinna-gpt_neox_small

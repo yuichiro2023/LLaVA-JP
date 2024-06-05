@@ -10,7 +10,7 @@ python train_llava.py \
     --mm_vision_select_layer -2 \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_feature patch \
-    --data_path ./dataset/chat_ja_calm2_short.json \
+    --data_path ./dataset/llava_pretrain_stair.json \
     --lazy_preprocess False \
     --is_multimodal True \
     --image_folder ./dataset/images \
@@ -39,4 +39,7 @@ python train_llava.py \
     --logging_steps 1 \
     --gradient_checkpointing True \
     --dataloader_num_workers 1 \
-    --lr_scheduler_type "cosine"
+    --lr_scheduler_type "cosine" \
+    --use_wandb \
+    --wandb_project llava-jp-test \
+    --wandb_name rinna-gpt_neox_small

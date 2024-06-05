@@ -39,5 +39,8 @@ python train_llava.py \
     --logging_steps 1 \
     --model_max_length 1532 \
     --gradient_checkpointing True \
-    --dataloader_num_workers 16 \
-    --lr_scheduler_type "cosine"
+    --dataloader_num_workers 8 \
+    --lr_scheduler_type "cosine" \
+    --use_wandb \
+    --wandb_project llava-jp-test \
+    --wandb_name llm_jp_v1_1
