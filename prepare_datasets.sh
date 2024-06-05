@@ -9,6 +9,7 @@ mkdir ./dataset/stair_captions_v1.2
 tar -xzf ./dataset/STAIR-captions/stair_captions_v1.2.tar.gz -C ./dataset/stair_captions_v1.2
 rm -rf ./dataset/STAIR-captions
 
+mkdir ./dataset/LLaVA-Stair-Caption
 python tools/stair_caption_to_llava_format.py
 
 ### 画像準備
@@ -21,6 +22,7 @@ rm ./dataset/train2014.zip
 
 ## LLaVA-CC3M-Pretrain-595K-JA
 ### キャプション準備
+mkdir ./dataset/LLaVA-CC3M-Pretrain-595K
 python tools/create_chat_ja_calm2.py
 
 ### 画像準備

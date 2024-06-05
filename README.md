@@ -1,3 +1,48 @@
+# リポジトリについて
+[LLaVA-JP](https://github.com/tosiyuki/LLaVA-JP)に変更を加えたリポジトリです。tosiyuki様に感謝します。
+
+# 使い方
+## インストール
+```
+git clone https://github.com/hibikaze-git/LLaVA-JP.git
+```
+
+## 環境構築
+### docker
+- docker-compose.ymlのenvironmentとdevice_idsを環境に合わせて変更し、以下を実行
+- WANDB_API_KEYは必須
+```
+docker compose build
+docker compose up -d
+docker compose exec ubuntu-cuda bash
+```
+
+### docker以外
+- ./docker/Dockerfileを参照して環境構築
+- wandb loginしておく
+
+## データの準備
+以下を実行し、STAIR Captions, LLaVA-CC3M-Pretrain-595K-JA, Japanese Visual Genome VQA datasetを./datasetに配置
+```
+bash prepare_datasets.sh
+```
+
+## 学習
+### Stage1(事前学習)
+```
+bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0.sh
+```
+
+### Stage2(ファインチューニング)
+--pretrain_mm_mlp_adapterを適宜変更して実行
+```
+bash scripts/finetune/finetune_llm-jp-1.3b-v1.0.sh
+```
+<br/>
+
+<br/>
+
+以下、LLaVA-JPのREADME原文です。
 # LLaVA-JP
 LLaVAの手法を使用して[llm-jp/llm-jp-1.3b-v1.0](https://huggingface.co/llm-jp/llm-jp-1.3b-v1.0)のような軽量なLLMをベースに画像に対応したマルチモーダルなLVLMを学習させるためのコードです。
 
