@@ -267,6 +267,14 @@ def train():
         data_args.image_size = data_args.image_processor.size["height"]
     data_module = make_supervised_data_module(tokenizer=tokenizer,
                                               data_args=data_args)
+
+    if training_args.use_wandb:
+        import wandb
+
+        wandb.init(entity=training_args.wandb_entity, project=training_args.wandb_project,
+            group=training_args.wandb_group, name=training_args.wandb_name,
+            tags=[training_args.wandb_tag] if training_args.wandb_tag else None)
+
     trainer = LLaVATrainer(model=model,
                     tokenizer=tokenizer,
                     args=training_args,
