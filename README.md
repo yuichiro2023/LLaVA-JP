@@ -29,14 +29,25 @@ bash prepare_datasets.sh
 
 ## 学習
 ### Stage1(事前学習)
+シングルGPU
 ```
 bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0.sh
 ```
+マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
+```
+bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0_accelerate.sh
+```
 
 ### Stage2(ファインチューニング)
---pretrain_mm_mlp_adapterを適宜変更して実行
+--pretrain_mm_mlp_adapterを適宜変更して実行  
+<br/>
+シングルGPU
 ```
 bash scripts/finetune/finetune_llm-jp-1.3b-v1.0.sh
+```
+マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
+```
+bash scripts/finetune/finetune_llm-jp-1.3b-v1.0_accelerate.sh
 ```
 <br/>
 
