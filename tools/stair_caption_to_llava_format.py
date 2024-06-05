@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 if __name__ == '__main__':
     #dataset_dir = './'
-    dataset_dir = '/home/toshi/work/git/ImageCaptionZoo/dataset'
+    dataset_dir = './dataset'
     stair_captions_dir = 'stair_captions_v1.2'
     caption_path = Path(dataset_dir, stair_captions_dir, 'stair_captions_v1.2_train.json')
     
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
             stair_llava_formats.append(llava_format)
 
-    chat_ja_path = Path('dataset', 'llava_stair_caption.json')
+    chat_ja_path = Path('dataset', 'LLaVA-Stair-Caption', 'llava_stair_caption.json')
     with open(chat_ja_path, mode="w") as f:
         json.dump(stair_llava_formats, f, indent=2, ensure_ascii=False)
     
