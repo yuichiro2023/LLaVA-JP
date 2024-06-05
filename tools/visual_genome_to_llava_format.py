@@ -3,7 +3,7 @@ from pathlib import Path
 
 
 if __name__ == '__main__':
-    dataset_dir = './'
+    dataset_dir = './dataset'
     stair_captions_dir = 'VisualGenome'
     caption_path = Path(dataset_dir, stair_captions_dir, 'question_answers.json')
     image_path = Path(dataset_dir, stair_captions_dir, 'image_data.json')
@@ -40,7 +40,7 @@ if __name__ == '__main__':
             
             stair_llava_formats.append(llava_format)
 
-    chat_ja_path = Path('input/LLaVa_visual_genome_ja', 'llava_visual_genome_ja.json')
+    chat_ja_path = Path('./dataset', 'llava_visual_genome_ja.json')
     with open(chat_ja_path, mode="w") as f:
         json.dump(stair_llava_formats, f, indent=2, ensure_ascii=False)
     
