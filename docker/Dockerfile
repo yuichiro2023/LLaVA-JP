@@ -23,6 +23,8 @@ RUN apt update && apt upgrade -y \
         ffmpeg \
         build-essential \
         cmake \
+        zip \
+        unzip \
   && pip install -U pip \
   && rm -rf /var/lib/apt/lists/*
 
