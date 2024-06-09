@@ -19,6 +19,9 @@ if __name__ == '__main__':
         image_data_json = json.loads(image_data)
 
     for image, annotation in zip(image_data_json, caption_data_json):
+        #print(image)
+        #print(annotation)
+
         for qas in annotation['qas']:
             llava_format = {}
             conversations = []
@@ -35,9 +38,11 @@ if __name__ == '__main__':
             conversations.append(conversation_system)
 
             llava_format['id'] = qas['qa_id']
-            llava_format['image'] = f"{image['image_id']}.jpg"
+            llava_format['image'] = f"{qas['image_id']}.jpg"
             llava_format['conversations'] = conversations
-            
+
+            #print(llava_format)
+
             stair_llava_formats.append(llava_format)
 
     chat_ja_path = Path('./dataset', 'llava_visual_genome_ja.json')
