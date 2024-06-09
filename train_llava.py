@@ -117,6 +117,11 @@ def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer,
         data_path=data_args.data_path,
         data_args=data_args
     )
+
+    print("--- dataset info ---")
+    print(len(train_dataset))
+    print("--------------------")
+
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
     return dict(train_dataset=train_dataset,
                 eval_dataset=None,
