@@ -70,6 +70,8 @@ RUN pip install peft bitsandbytes
 
 RUN pip install wandb
 
+RUN pip install gradio
+
 RUN mkdir -p /tmp/own/docker/entrypoint
 COPY docker-entrypoint.sh /tmp/own/docker/entrypoint
 
