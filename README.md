@@ -27,9 +27,10 @@ docker compose exec ubuntu-cuda bash
 - wandb loginしておく
 
 ## データの準備
-以下を実行し、STAIR Captions, LLaVA-CC3M-Pretrain-595K-JA, Japanese Visual Genome VQA datasetを./datasetに配置
+- 以下を実行し、STAIR Captions(商用利用可能な画像のみ), Japanese Visual Genome VQA datasetを./datasetに配置
+- Stage1: 11k, Stage2: 800k
 ```
-bash prepare_datasets.sh
+bash prepare_datasets_no_cc3m_filter_stair.sh
 ```
 
 ## 学習
