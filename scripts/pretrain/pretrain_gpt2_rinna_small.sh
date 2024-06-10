@@ -25,9 +25,9 @@ python train_llava.py \
     --bf16 False \
     --output_dir ./output_llava/checkpoints/pretrain-llava-v1.5-japanese-gpt2-small_test \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 8 \
+    --per_device_train_batch_size 32 \
     --per_device_eval_batch_size 4 \
-    --gradient_accumulation_steps 4 \
+    --gradient_accumulation_steps 1 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 2000 \
@@ -35,7 +35,7 @@ python train_llava.py \
     --learning_rate 1e-3 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
-    --logging_steps 1 \
+    --logging_steps 10 \
     --gradient_checkpointing True \
     --dataloader_num_workers 8 \
     --lr_scheduler_type "cosine" \
