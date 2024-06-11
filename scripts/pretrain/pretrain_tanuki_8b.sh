@@ -38,7 +38,7 @@ python train_llava.py \
     --logging_steps 10 \
     --model_max_length 8192 \
     --gradient_checkpointing True \
-    --dataloader_num_workers 96 \
+    --dataloader_num_workers 48 \
     --lr_scheduler_type "cosine" \
     --use_wandb \
     --wandb_project llava-jp-stage1 \
