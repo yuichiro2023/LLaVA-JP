@@ -274,11 +274,18 @@ def train():
                                               data_args=data_args)
 
     if training_args.use_wandb:
-        import wandb
+        import deepspeed
+        from deepspeed.accelerator import get_accelerator
 
-        wandb.init(entity=training_args.wandb_entity, project=training_args.wandb_project,
-            group=training_args.wandb_group, name=training_args.wandb_name,
-            tags=[training_args.wandb_tag] if training_args.wandb_tag else None)
+        is_local_rank_0 = (torch.distributed.get_rank() % get_accelerator().device_count() == 0) if torch.distributed.is_initialized() else True
+
+        if is_local_rank_0:
+            import wandb
+
+            wandb.init(entity=training_args.wandb_entity, project=training_args.wandb_project,
+                group=training_args.wandb_group, name=training_args.wandb_name,
+                tags=[training_args.wandb_tag] if training_args.wandb_tag else None)
+
 
     trainer = LLaVATrainer(model=model,
                     tokenizer=tokenizer,
