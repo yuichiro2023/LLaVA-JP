@@ -16,4 +16,4 @@ conda activate llava-jp
 #cd /storage5/multimodal/LLaVA-JP
 cd /storage4/work/yamaguchi/LLaVA-JP
 
-bash scripts/pretrain/finetune_tanuki_8b_accelerate.sh
+bash scripts/finetune/finetune_tanuki_8b_accelerate.sh
