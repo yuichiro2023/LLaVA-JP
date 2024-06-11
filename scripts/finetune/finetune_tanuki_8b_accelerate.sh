@@ -9,7 +9,7 @@ train_llava.py \
     --tune_mm_mlp_adapter False \
     --vision_tower google/siglip-so400m-patch14-384 \
     --mm_vision_select_layer -2 \
-    --pretrain_mm_mlp_adapter ./output_llava/checkpoints/pretrain-llava-jp-1.3b-v1-siglip-so400m-patch14-384/checkpoint-2000/mm_projector.bin \
+    --pretrain_mm_mlp_adapter ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-v0-siglip-so400m-patch14-384/mm_projector.bin \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_feature patch \
     --data_path ./dataset/llava_visual_genome_ja.json \
@@ -25,14 +25,14 @@ train_llava.py \
     --group_by_modality_length True \
     --fp16 False \
     --bf16 True \
-    --output_dir ./output_llava/checkpoints/finetune-llava-jp-Tanuki-8B-v1-siglip-so400m-patch14-384 \
+    --output_dir ./output_llava/checkpoints/finetune-llava-jp-Tanuki-8B-vision-v0-siglip-so400m-patch14-384 \
     --num_train_epochs 1 \
     --per_device_train_batch_size 16 \
     --per_device_eval_batch_size 2 \
     --gradient_accumulation_steps 4 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
-    --save_steps 2000 \
+    --save_steps 250 \
     --save_total_limit 100 \
     --learning_rate 2e-5 \
     --weight_decay 0. \
@@ -40,7 +40,7 @@ train_llava.py \
     --logging_steps 10 \
     --model_max_length 8192 \
     --gradient_checkpointing True \
-    --dataloader_num_workers 184 \
+    --dataloader_num_workers 16 \
     --lr_scheduler_type "cosine" \
     --use_wandb \
     --wandb_project llava-jp-stage2 \
