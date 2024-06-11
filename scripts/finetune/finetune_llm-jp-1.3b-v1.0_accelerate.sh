@@ -1,6 +1,6 @@
 #!/bin/bash
 
-accelerate launch --config_file configs/accelerate_config_zero1.yaml \
+accelerate launch --config_file configs/finetune/accelerate_config_zero1.yaml \
 train_llava.py \
     --model_name_or_path llm-jp/llm-jp-1.3b-v1.0 \
     --version v1 \
