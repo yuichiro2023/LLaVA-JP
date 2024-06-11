@@ -27,9 +27,9 @@ train_llava.py \
     --bf16 True \
     --output_dir ./output_llava/checkpoints/finetune-llava-jp-Tanuki-8B-vision-v0-siglip-so400m-patch14-384 \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 1 \
+    --per_device_train_batch_size 4 \
     --per_device_eval_batch_size 2 \
-    --gradient_accumulation_steps 64 \
+    --gradient_accumulation_steps 16 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
     --save_steps 250 \
@@ -40,7 +40,7 @@ train_llava.py \
     --logging_steps 10 \
     --model_max_length 4096 \
     --gradient_checkpointing True \
-    --dataloader_num_workers 4 \
+    --dataloader_num_workers 8 \
     --lr_scheduler_type "cosine" \
     --use_wandb \
     --wandb_project llava-jp-stage2 \
