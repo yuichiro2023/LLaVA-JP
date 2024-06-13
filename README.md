@@ -37,11 +37,11 @@ bash prepare_datasets_no_cc3m_filter_stair.sh
 ### Stage1(事前学習)
 シングルGPU
 ```
-bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0.sh
+bash scripts/pretrain/pretrain_tanuki_8b.sh
 ```
-マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）(未検証)
+マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
 ```
-bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0_accelerate.sh
+bash scripts/pretrain/pretrain_tanuki_8b_accelerate.sh
 ```
 
 ### Stage2(ファインチューニング)
@@ -49,11 +49,11 @@ bash scripts/pretrain/pretrain_llm_jp_1.3b_v1.0_accelerate.sh
 <br/>
 シングルGPU
 ```
-bash scripts/finetune/finetune_llm-jp-1.3b-v1.0.sh
+bash scripts/finetune/finetune_tanuki_8b.sh
 ```
-マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）(未検証)
+マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
 ```
-bash scripts/finetune/finetune_llm-jp-1.3b-v1.0_accelerate.sh
+bash scripts/finetune/finetune_tanuki_8b_accelerate.sh
 ```
 <br/>
 
