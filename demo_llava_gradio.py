@@ -4,6 +4,7 @@ import transformers
 from llava.constants import DEFAULT_IMAGE_TOKEN, IMAGE_TOKEN_INDEX
 from llava.conversation import conv_templates
 from llava.model.llava_gpt2 import LlavaGpt2ForCausalLM
+from llava.model.llava_llama import LlavaLlamaForCausalLM
 from llava.train.arguments_dataclass import (
     DataArguments,
     ModelArguments,
@@ -18,10 +19,11 @@ parser = transformers.HfArgumentParser(
     (ModelArguments, DataArguments, TrainingArguments)
 )
 model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-# model_path = 'toshi456/llava-jp-1.3b-v1.0'
-model_path = "output_llava/checkpoints/finetune_gpt2_rinna_small-v1-siglip-so400m-patch14-384/checkpoint-2000"
+#model_path = 'hibikaze/finetune_gpt2_rinna_small-v1-siglip-so400m-patch14-384_checkpoint-2000'
+model_path = 'hibikaze/Tanuki-8B-vision-v0-siglip-so400m-patch14-384-fix'
+#model_path = "output_llava/checkpoints/finetune_gpt2_rinna_small-v1-siglip-so400m-patch14-384/checkpoint-2000"
 
-model = LlavaGpt2ForCausalLM.from_pretrained(
+model = LlavaLlamaForCausalLM.from_pretrained(
     model_path,
     low_cpu_mem_usage=True,
     use_safetensors=True,
@@ -110,7 +112,7 @@ def inference_fn(
     ]
 
     print(output_ids)
-    output = tokenizer.decode(output_ids, skip_special_tokens=False)
+    output = tokenizer.decode(output_ids, skip_special_tokens=True)
 
     print(output)
 
