@@ -30,7 +30,7 @@ docker compose exec ubuntu-cuda bash
 - 以下を実行し、STAIR Captions(商用利用可能な画像のみ), Japanese Visual Genome VQA datasetを./datasetに配置
 - Stage1: 11k, Stage2: 800k
 ```
-bash prepare_datasets_no_cc3m_filter_stair.sh
+bash prepare_datasets/v0.sh
 ```
 
 ## 学習
@@ -55,6 +55,21 @@ bash scripts/finetune/finetune_tanuki_8b.sh
 ```
 bash scripts/finetune/finetune_tanuki_8b_accelerate.sh
 ```
+
+### モデルのアップロード
+- まずhuggingfaceにモデル用のリポジトリを新規作成して置く必要がある
+- アップロードにはupload_model.pyを使用する。GPUは不要
+- モデルの保存先、リポジトリ名を変更する
+
+## モデルの使い方
+- demo_llava_gradio.pyを使用することで入出力を試せる
+- model_pathにhuggingfaceのリポジトリ名を指定する必要がある
+- gradioがインストールされていれば、以下を実行し、localhost:7860などで画面にアクセスできる
+
+```
+python demo_llava_gradio.py
+```
+
 <br/>
 
 <br/>

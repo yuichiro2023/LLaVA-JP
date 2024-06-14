@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# 以下のデータセットを用意
+# STAIR Captions(非商用利用画像除去)
+# Japanese Visual Genome VQA
+
 # for Stage1
 ## STAIR Captions
 ### キャプション準備
