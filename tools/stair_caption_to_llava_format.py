@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 if __name__ == '__main__':
     #dataset_dir = './'
-    dataset_dir = './dataset'
+    dataset_dir = './dataset/v0'
     stair_captions_dir = 'stair_captions_v1.2'
     caption_path = Path(dataset_dir, stair_captions_dir, 'stair_captions_v1.2_train.json')
     

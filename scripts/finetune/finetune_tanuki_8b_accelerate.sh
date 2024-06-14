@@ -12,10 +12,10 @@ train_llava.py \
     --pretrain_mm_mlp_adapter ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-v0-siglip-so400m-patch14-384/mm_projector.bin \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_feature patch \
-    --data_path ./dataset/llava_visual_genome_ja.json \
+    --data_path ./dataset/v0/llava_visual_genome_ja.json \
     --lazy_preprocess False \
     --is_multimodal True \
-    --image_folder ./dataset/images/stage2 \
+    --image_folder ./dataset/v0/images/stage2 \
     --image_aspect_ratio square \
     --optim adamw_bnb_8bit \
     --double_quant True \

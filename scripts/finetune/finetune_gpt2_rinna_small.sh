@@ -25,7 +25,7 @@ python train_llava.py \
     --bf16 True \
     --output_dir ./output_llava/checkpoints/finetune_gpt2_rinna_small-v1-siglip-so400m-patch14-384 \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 28 \
+    --per_device_train_batch_size 2 \
     --per_device_eval_batch_size 2 \
     --gradient_accumulation_steps 2 \
     --evaluation_strategy "no" \

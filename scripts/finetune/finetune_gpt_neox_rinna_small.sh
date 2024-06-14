@@ -11,10 +11,10 @@ python train_llava.py \
     --pretrain_mm_mlp_adapter ./output_llava/checkpoints/pretrain-llava-v1.5-japanese-gpt-neox-small/mm_projector.bin \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_feature patch \
-    --data_path ./dataset/llava_instruct_150k_ja_short.json \
+    --data_path ./dataset/v0/llava_instruct_150k_ja_short.json \
     --lazy_preprocess False \
     --is_multimodal True \
-    --image_folder ./dataset/images \
+    --image_folder ./dataset/v0/images \
     --image_aspect_ratio square \
     --optim adamw_bnb_8bit \
     --double_quant True \
