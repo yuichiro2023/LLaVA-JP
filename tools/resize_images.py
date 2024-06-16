@@ -6,6 +6,7 @@ import argparse
 import os
 
 from PIL import Image
+from tqdm import tqdm
 
 
 def resize_image(image, max_size):
@@ -40,7 +41,7 @@ def resize_images_in_directory(input_directory, output_directory, max_size):
         os.makedirs(output_directory)
 
     # 入力ディレクトリ内のすべてのファイルを取得
-    for filename in os.listdir(input_directory):
+    for filename in tqdm(os.listdir(input_directory)):
         # ファイルが.jpgで終わる場合
         if filename.lower().endswith(".jpg"):
             input_file_path = os.path.join(input_directory, filename)
