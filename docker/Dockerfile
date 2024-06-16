@@ -25,6 +25,7 @@ RUN apt update && apt upgrade -y \
         cmake \
         zip \
         unzip \
+        jq \
   && pip install -U pip \
   && rm -rf /var/lib/apt/lists/*
 
