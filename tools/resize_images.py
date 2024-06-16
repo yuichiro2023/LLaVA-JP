@@ -1,8 +1,9 @@
 """
-python tools/resize_images.py ./image_test/origin ./image_test/resize 768
+python tools/resize_images.py ./image_test/origin ./image_test/resize 768 --num_processes 4
 """
 
 import argparse
+import concurrent.futures
 import os
 
 from PIL import Image
@@ -35,25 +36,47 @@ def resize_image(image, max_size):
     return image.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
 
-def resize_images_in_directory(input_directory, output_directory, max_size):
+def process_image(filename, input_directory, output_directory, max_size):
+    input_file_path = os.path.join(input_directory, filename)
+    output_file_path = os.path.join(output_directory, filename)
+
+    # 画像を開く
+    with Image.open(input_file_path) as img:
+        # 画像をリサイズ
+        resized_img = resize_image(img, max_size)
+
+        # リサイズした画像を出力ディレクトリに保存
+        resized_img.save(output_file_path)
+
+
+def resize_images_in_directory(
+    input_directory, output_directory, max_size, num_processes
+):
     # 出力ディレクトリが存在しない場合は作成
     if not os.path.exists(output_directory):
         os.makedirs(output_directory)
 
     # 入力ディレクトリ内のすべてのファイルを取得
-    for filename in tqdm(os.listdir(input_directory)):
-        # ファイルが.jpgで終わる場合
-        if filename.lower().endswith(".jpg"):
-            input_file_path = os.path.join(input_directory, filename)
-            output_file_path = os.path.join(output_directory, filename)
+    filenames = [
+        filename
+        for filename in os.listdir(input_directory)
+        if filename.lower().endswith(".jpg")
+    ]
 
-            # 画像を開く
-            with Image.open(input_file_path) as img:
-                # 画像をリサイズ
-                resized_img = resize_image(img, max_size)
-
-                # リサイズした画像を出力ディレクトリに保存
-                resized_img.save(output_file_path)
+    # マルチプロセス処理で画像をリサイズ
+    with concurrent.futures.ProcessPoolExecutor(max_workers=num_processes) as executor:
+        list(
+            tqdm(
+                executor.map(
+                    process_image,
+                    filenames,
+                    [input_directory] * len(filenames),
+                    [output_directory] * len(filenames),
+                    [max_size] * len(filenames),
+                ),
+                total=len(filenames),
+            )
+        )
 
 
 def main():
@@ -67,11 +90,17 @@ def main():
     parser.add_argument(
         "image_size", type=int, help="Max size for the longest edge of the image"
     )
+    parser.add_argument(
+        "--num_processes",
+        type=int,
+        default=None,
+        help="Number of processes to use for parallel processing",
+    )
 
     args = parser.parse_args()
 
     resize_images_in_directory(
-        args.input_directory, args.output_directory, args.image_size
+        args.input_directory, args.output_directory, args.image_size, args.num_processes
     )
 
 
