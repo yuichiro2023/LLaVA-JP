@@ -1,6 +1,6 @@
 #!/bin/bash
 
-accelerate launch --config_file configs/pretrain/accelerate_config_zero1.yaml \
+accelerate launch --config_file configs/accelerate/pretrain/accelerate_config_zero1.yaml \
 train_llava.py \
     --base_model llama \
     --model_name_or_path hatakeyama-llm-team/Tanuki-8B \
