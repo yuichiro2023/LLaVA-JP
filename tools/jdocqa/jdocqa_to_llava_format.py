@@ -103,7 +103,12 @@ if __name__ == "__main__":
 
     print(len(llava_formats))
 
-    caption_path = Path("./dataset/jdocqa", "jdocqa.json")
+    output_filename = "jdocqa"
+
+    if args.only_answerable:
+        output_filename = output_filename + "_only_answerable"
+
+    caption_path = Path("./dataset/jdocqa", output_filename + ".json")
 
     with open(caption_path, mode="w") as f:
         json.dump(llava_formats, f, indent=2, ensure_ascii=False)
