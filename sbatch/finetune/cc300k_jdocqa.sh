@@ -2,7 +2,7 @@
 
 # Command line options go here
 #SBATCH --time=96:00:00
-#SBATCH --nodelist=slurm0-a3-ghpc-19
+#SBATCH --nodelist=slurm0-a3-ghpc-2
 #SBATCH --job-name=llava-jp
 #SBATCH --output=sbatch_logs/train_llava-jp_stage2.out
 #SBATCH --gpus-per-node=8

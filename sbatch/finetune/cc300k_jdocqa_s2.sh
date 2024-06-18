@@ -16,4 +16,4 @@ conda activate llava-jp
 #cd /storage5/multimodal/LLaVA-JP
 cd /storage4/work/yamaguchi/LLaVA-JP
 
-bash scripts/finetune/finetune_accelerate.sh configs/train/finetune/cc300k_jdocqa_s2.json
+bash scripts/finetune/finetune_accelerate_s2.sh configs/train/finetune/cc300k_jdocqa_s2.json

@@ -15,7 +15,7 @@
     "image_folder": "./dataset/jdocqa/images",
     "image_aspect_ratio": "square",
     "optim": "adamw_bnb_8bit",
-    "model_max_length": 8192,
+    "model_max_length": 4096,
     "double_quant": true,
     "quant_type": "nf4",
     "bits": 16,

@@ -11,7 +11,7 @@
     "data_path": "/storage5/shiraishi/LLaVA-JP/dataset/LLaVA-CC-300k-Caption/llava_cc_300k_caption.json",
     "lazy_preprocess": false,
     "is_multimodal": true,
-    "image_folder": "/storage5/shiraishi/LLaVA-JP/dataset/images/cc_300k",
+    "image_folder": "./dataset/cc_300k",
     "image_aspect_ratio": "square",
     "optim": "adamw_torch",
     "model_max_length": 8192,

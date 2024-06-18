@@ -16,4 +16,4 @@ conda activate llava-jp
 #cd /storage5/multimodal/LLaVA-JP
 cd /storage4/work/yamaguchi/LLaVA-JP
 
-bash scripts/pretrain/pretrain_accelerate_s2.sh configs/train/cc300k_s2.json
+bash scripts/pretrain/pretrain_accelerate_s2.sh configs/train/pretrain/cc300k_s2.json
