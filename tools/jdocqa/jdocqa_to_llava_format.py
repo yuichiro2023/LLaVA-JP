@@ -1,3 +1,9 @@
+"""
+jdocqaの準備
+python tools/jdocqa/jdocqa_to_llava_format.py --only_answerable
+"""
+
+import argparse
 import json
 import random
 from pathlib import Path
@@ -26,6 +32,11 @@ def create_llava_format(data):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate LLAVA format dataset")
+    parser.add_argument('--with_ocr', action='store_true', help='Include OCR data in the output')
+    parser.add_argument('--only_answerable', action='store_true', help='reject unanswerable data in the output')
+    args = parser.parse_args()
+
     dataset = load_dataset(
         path="shunk031/JDocQA",
         # Rename to the same wording as in the paper: Document -> Report / Kouhou -> Pamphlet
@@ -72,16 +83,23 @@ if __name__ == "__main__":
 
     # VQA
     for data in dataset["train"]:
-        llava_formats.append(create_llava_format(data))
+        do_append = True
+
+        if args.only_answerable and data["no_reason"] == 0:
+            do_append = False
+
+        if do_append:
+            llava_formats.append(create_llava_format(data))
 
     # OCR
-    for data in dataset["train"]:
-        data["question"] = random.choice(ocr_instructions)
+    if args.with_ocr:
+        for data in dataset["train"]:
+            data["question"] = random.choice(ocr_instructions)
 
-        if data["text_from_ocr_pdf"] != "" and data["text_from_ocr_pdf"] is not None:
-            data["original_answer"] = data["text_from_ocr_pdf"]
+            if data["text_from_ocr_pdf"] != "" and data["text_from_ocr_pdf"] is not None:
+                data["original_answer"] = data["text_from_ocr_pdf"]
 
-            llava_formats.append(create_llava_format(data))
+                llava_formats.append(create_llava_format(data))
 
     print(len(llava_formats))
 

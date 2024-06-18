@@ -7,7 +7,7 @@ mkdir ./dataset/jdocqa
 
 # Stage2
 ### キャプション準備
-python tools/jdocqa/jdocqa_to_llava_format.py 
+python tools/jdocqa/jdocqa_to_llava_format.py --only_answerable
 
 ### 画像準備
 mkdir -p ./dataset/jdocqa/pdf
