@@ -37,11 +37,25 @@ bash prepare_datasets/v0.sh
 ### Stage1(事前学習)
 シングルGPU
 ```
-bash scripts/pretrain/pretrain.sh configs/train/pretrain/tanuki-8b.json
+bash scripts/pretrain/pretrain.sh \
+    ./configs/train/pretrain/base.json \
+    ./configs/image_encoder/siglip-base-patch16-256-multilingual.json \
+    ./configs/dataset/cc300k.json \
+    ./configs/model/tanuki-8b.json \
+    ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-cc300k-s2_siglip_256 \
+    llava-jp-stage1 \
+    Tanuki-8B-vision-cc300k-s2_siglip_256
 ```
 マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
 ```
-bash scripts/pretrain/pretrain_accelerate.sh configs/train/pretrain/tanuki-8b.json
+bash scripts/pretrain/pretrain_accelerate.sh \
+    ./configs/train/pretrain/base.json \
+    ./configs/image_encoder/siglip-base-patch16-256-multilingual.json \
+    ./configs/dataset/cc300k.json \
+    ./configs/model/tanuki-8b.json \
+    ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-cc300k-s2_siglip_256 \
+    llava-jp-stage1 \
+    Tanuki-8B-vision-cc300k-s2_siglip_256
 ```
 
 ### Stage2(ファインチューニング)
@@ -49,11 +63,27 @@ bash scripts/pretrain/pretrain_accelerate.sh configs/train/pretrain/tanuki-8b.js
 <br/>
 シングルGPU
 ```
-bash scripts/finetune/finetune.sh configs/train/finetune/tanuki-8b.json
+bash scripts/finetune/finetune.sh \
+    ./configs/train/finetune/base.json \
+    ./configs/image_encoder/siglip-base-patch16-256-multilingual.json \
+    ./configs/dataset/ja-vg-vqa.json \
+    ./configs/model/tanuki-8b.json \
+    ./output_llava/checkpoints/finetune-llava-jp-Tanuki-8B-vision-cc300k_j-vg-vqa-s2_siglip_256 \
+    llava-jp-stage2 \
+    Tanuki-8B-vision-cc300k_j-vg-vqa-s2_siglip_256 \
+    ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-cc300k-s2_siglip_256/mm_projector.bin
 ```
 マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
 ```
-bash scripts/finetune/finetune_accelerate.sh configs/train/finetune/tanuki-8b.json
+bash scripts/finetune/finetune_accelerate.sh \
+    ./configs/train/finetune/base.json \
+    ./configs/image_encoder/siglip-base-patch16-256-multilingual.json \
+    ./configs/dataset/ja-vg-vqa.json \
+    ./configs/model/tanuki-8b.json \
+    ./output_llava/checkpoints/finetune-llava-jp-Tanuki-8B-vision-cc300k_j-vg-vqa-s2_siglip_256 \
+    llava-jp-stage2 \
+    Tanuki-8B-vision-cc300k_j-vg-vqa-s2_siglip_256 \
+    ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-cc300k-s2_siglip_256/mm_projector.bin
 ```
 
 ### モデルのアップロード

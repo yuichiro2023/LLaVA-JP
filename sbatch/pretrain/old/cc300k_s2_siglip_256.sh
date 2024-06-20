@@ -16,11 +16,4 @@ conda activate llava-jp
 #cd /storage5/multimodal/LLaVA-JP
 cd /storage4/work/yamaguchi/LLaVA-JP
 
-bash scripts/pretrain/pretrain_accelerate.sh \
-    ./configs/train/pretrain/base.json \
-    ./configs/image_encoder/siglip-base-patch16-256-multilingual.json \
-    ./configs/dataset/cc300k.json \
-    ./configs/model/tanuki-8b.json \
-    ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-cc300k-s2_siglip_256 \
-    llava-jp-stage1 \
-    Tanuki-8B-vision-cc300k-s2_siglip_256
+bash scripts/pretrain/pretrain_accelerate_s2_siglip_256.sh configs/train/pretrain/cc300k_s2_siglip_256.json

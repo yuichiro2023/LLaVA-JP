@@ -2,37 +2,58 @@
 
 # 引数としてconfig_fileのパスを受け取る
 CONFIG_FILE=$1
+IMAGE_ENCODER_CONFIG_FILE=$2
+DATASET_CONFIG_FILE=$3
+MODEL_CONFIG_FILE=$4
+OUTPUT_DIR=$5
+WANDB_PROJECT=$6
+WANDB_NAME=$7
+PRETRAIN_MM_MLP_ADAPTER=$8
 
-# config_fileのパスが指定されていない場合はエラーメッセージを表示して終了する
-if [ -z "$CONFIG_FILE" ]; then
-    echo "Usage: $0 <config_file>"
+
+# 引数が指定されていない場合はエラーメッセージを表示して終了
+if [ -z "$CONFIG_FILE" ] || [ -z "$IMAGE_ENCODER_CONFIG_FILE" ] || [ -z "$DATASET_CONFIG_FILE" ] || [ -z "$MODEL_CONFIG_FILE" ] || [ -z "$OUTPUT_DIR" ] || [ -z "$WANDB_PROJECT" ] || [ -z "$WANDB_NAME" ] || [ -z "$PRETRAIN_MM_MLP_ADAPTER" ]; then
+    echo "Invalid argument"
     exit 1
 fi
 
-# config_fileが存在するか確認する
+# パスが存在するか確認
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "Error: Config file $CONFIG_FILE not found."
     exit 1
 fi
 
+if [ ! -f "$IMAGE_ENCODER_CONFIG_FILE" ]; then
+    echo "Error: Config file $IMAGE_ENCODER_CONFIG_FILE not found."
+    exit 1
+fi
+
+if [ ! -f "$DATASET_CONFIG_FILE" ]; then
+    echo "Error: Config file $DATASET_CONFIG_FILE not found."
+    exit 1
+fi
+
+if [ ! -f "$MODEL_CONFIG_FILE" ]; then
+    echo "Error: Config file $MODEL_CONFIG_FILE not found."
+    exit 1
+fi
+
+if [ ! -f "$PRETRAIN_MM_MLP_ADAPTER" ]; then
+    echo "Error: $PRETRAIN_MM_MLP_ADAPTER not found."
+    exit 1
+fi
+
 # 必要なパラメータをjqで読み込んで変数に格納する
-BASE_MODEL=$(jq -r '.base_model' $CONFIG_FILE)
-MODEL_NAME_OR_PATH=$(jq -r '.model_name_or_path' $CONFIG_FILE)
 VERSION=$(jq -r '.version' $CONFIG_FILE)
 FREEZE_BACKBONE=$(jq -r '.freeze_backbone' $CONFIG_FILE)
 TUNE_MM_MLP_ADAPTER=$(jq -r '.tune_mm_mlp_adapter' $CONFIG_FILE)
-VISION_TOWER=$(jq -r '.vision_tower' $CONFIG_FILE)
 MM_VISION_SELECT_LAYER=$(jq -r '.mm_vision_select_layer' $CONFIG_FILE)
-PRETRAIN_MM_MLP_ADAPTER=$(jq -r '.pretrain_mm_mlp_adapter' $CONFIG_FILE)
 MM_PROJECTOR_TYPE=$(jq -r '.mm_projector_type' $CONFIG_FILE)
 MM_VISION_SELECT_FEATURE=$(jq -r '.mm_vision_select_feature' $CONFIG_FILE)
-DATA_PATH=$(jq -r '.data_path' $CONFIG_FILE)
 LAZY_PREPROCESS=$(jq -r '.lazy_preprocess' $CONFIG_FILE)
 IS_MULTIMODAL=$(jq -r '.is_multimodal' $CONFIG_FILE)
-IMAGE_FOLDER=$(jq -r '.image_folder' $CONFIG_FILE)
 IMAGE_ASPECT_RATIO=$(jq -r '.image_aspect_ratio' $CONFIG_FILE)
 OPTIM=$(jq -r '.optim' $CONFIG_FILE)
-MODEL_MAX_LENGTH=$(jq -r '.model_max_length' $CONFIG_FILE)
 DOUBLE_QUANT=$(jq -r '.double_quant' $CONFIG_FILE)
 QUANT_TYPE=$(jq -r '.quant_type' $CONFIG_FILE)
 BITS=$(jq -r '.bits' $CONFIG_FILE)
@@ -40,7 +61,6 @@ LORA_ENABLE=$(jq -r '.lora_enable' $CONFIG_FILE)
 GROUP_BY_MODALITY_LENGTH=$(jq -r '.group_by_modality_length' $CONFIG_FILE)
 FP16=$(jq -r '.fp16' $CONFIG_FILE)
 BF16=$(jq -r '.bf16' $CONFIG_FILE)
-OUTPUT_DIR=$(jq -r '.output_dir' $CONFIG_FILE)
 NUM_TRAIN_EPOCHS=$(jq -r '.num_train_epochs' $CONFIG_FILE)
 PER_DEVICE_TRAIN_BATCH_SIZE=$(jq -r '.per_device_train_batch_size' $CONFIG_FILE)
 PER_DEVICE_EVAL_BATCH_SIZE=$(jq -r '.per_device_eval_batch_size' $CONFIG_FILE)
@@ -57,8 +77,18 @@ GRADIENT_CHECKPOINTING=$(jq -r '.gradient_checkpointing' $CONFIG_FILE)
 DATALOADER_NUM_WORKERS=$(jq -r '.dataloader_num_workers' $CONFIG_FILE)
 LR_SCHEDULER_TYPE=$(jq -r '.lr_scheduler_type' $CONFIG_FILE)
 USE_WANDB=$(jq -r '.use_wandb' $CONFIG_FILE)
-WANDB_PROJECT=$(jq -r '.wandb_project' $CONFIG_FILE)
-WANDB_NAME=$(jq -r '.wandb_name' $CONFIG_FILE)
+
+VISION_TOWER=$(jq -r '.vision_tower' $IMAGE_ENCODER_CONFIG_FILE)
+SCALES=$(jq -r '.scales | @tsv' $IMAGE_ENCODER_CONFIG_FILE)
+IMAGE_SIZE=$(jq -r '.image_size' $IMAGE_ENCODER_CONFIG_FILE)
+
+DATA_PATH=$(jq -r '.data_path' $DATASET_CONFIG_FILE)
+IMAGE_FOLDER=$(jq -r '.image_folder' $DATASET_CONFIG_FILE)
+
+BASE_MODEL=$(jq -r '.base_model' $MODEL_CONFIG_FILE)
+MODEL_NAME_OR_PATH=$(jq -r '.model_name_or_path' $MODEL_CONFIG_FILE)
+MODEL_MAX_LENGTH=$(jq -r '.model_max_length' $MODEL_CONFIG_FILE)
+
 
 # シェルスクリプトの実行
 python train_llava.py \
@@ -104,4 +134,6 @@ python train_llava.py \
     --lr_scheduler_type "$LR_SCHEDULER_TYPE" \
     --use_wandb "$USE_WANDB" \
     --wandb_project "$WANDB_PROJECT" \
-    --wandb_name "$WANDB_NAME"
+    --wandb_name "$WANDB_NAME" \
+    --scales $SCALES \
+    --image_size $IMAGE_SIZE

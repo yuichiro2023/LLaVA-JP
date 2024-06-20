@@ -16,4 +16,12 @@ conda activate llava-jp
 #cd /storage5/multimodal/LLaVA-JP
 cd /storage4/work/yamaguchi/LLaVA-JP
 
-bash scripts/finetune/finetune_accelerate_s2_siglip_256.sh configs/train/finetune/cc300k_j-vg-vqa_s2_siglip_256.json
+bash scripts/finetune/finetune_accelerate.sh \
+    ./configs/train/finetune/base.json \
+    ./configs/image_encoder/siglip-base-patch16-256-multilingual.json \
+    ./configs/dataset/ja-vg-vqa.json \
+    ./configs/model/tanuki-8b.json \
+    ./output_llava/checkpoints/finetune-llava-jp-Tanuki-8B-vision-cc300k_j-vg-vqa-s2_siglip_256 \
+    llava-jp-stage2 \
+    Tanuki-8B-vision-cc300k_j-vg-vqa-s2_siglip_256 \
+    ./output_llava/checkpoints/pretrain-llava-jp-Tanuki-8B-vision-cc300k-s2_siglip_256/mm_projector.bin
