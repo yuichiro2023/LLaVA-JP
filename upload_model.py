@@ -37,6 +37,7 @@ def upload_to_hf_hub(local_folder_path, repo_id):
             "optimizer.pt",
             ".huggingface",
             ".gitattributes",
+            "checkpoint-*",
         ],
     )
 
