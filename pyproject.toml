@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "llava"
+name = "llavajp"
 version = "1.2.2.post1"
 description = "Towards GPT-4 like large language and visual assistant."
 readme = "README.md"
@@ -27,8 +27,8 @@ train = ["deepspeed==0.12.6", "ninja", "wandb"]
 build = ["build", "twine"]
 
 [project.urls]
-"Homepage" = "https://llava-vl.github.io"
-"Bug Tracker" = "https://github.com/haotian-liu/LLaVA/issues"
+# "Homepage" = "https://llava-vl.github.io"
+# "Bug Tracker" = "https://github.com/haotian-liu/LLaVA/issues"
 
 [tool.setuptools.packages.find]
 exclude = ["assets*", "benchmark*", "docs", "dist*", "playground*", "scripts*", "tests*"]
