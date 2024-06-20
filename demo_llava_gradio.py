@@ -1,9 +1,14 @@
+"""
+hibikaze/Tanuki-8B-vision-cc300k_j-vg-vqa-s2_siglip_256
+
+Enter model path: your-username/your-repo-id
+"""
+
 import gradio as gr
 import torch
 import transformers
 from llava.constants import DEFAULT_IMAGE_TOKEN, IMAGE_TOKEN_INDEX
 from llava.conversation import conv_templates
-from llava.model.llava_gpt2 import LlavaGpt2ForCausalLM
 from llava.model.llava_llama import LlavaLlamaForCausalLM
 from llava.train.arguments_dataclass import (
     DataArguments,
@@ -12,16 +17,18 @@ from llava.train.arguments_dataclass import (
 )
 from llava.train.dataset import tokenizer_image_token
 
+# argparseがHfArgumentParserと干渉するので、inputで受け取る
+model_path = input("Enter model path: ")
+
 # load model
 device = "cuda" if torch.cuda.is_available() else "cpu"
 torch_dtype = torch.bfloat16 if device == "cuda" else torch.float32
+
 parser = transformers.HfArgumentParser(
     (ModelArguments, DataArguments, TrainingArguments)
 )
+
 model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-#model_path = 'hibikaze/finetune_gpt2_rinna_small-v1-siglip-so400m-patch14-384_checkpoint-2000'
-model_path = 'hibikaze/Tanuki-8B-vision-v0-siglip-so400m-patch14-384-fix'
-#model_path = "output_llava/checkpoints/finetune_gpt2_rinna_small-v1-siglip-so400m-patch14-384/checkpoint-2000"
 
 model = LlavaLlamaForCausalLM.from_pretrained(
     model_path,
@@ -32,7 +39,7 @@ model = LlavaLlamaForCausalLM.from_pretrained(
 )
 tokenizer = transformers.AutoTokenizer.from_pretrained(
     model_path,
-    model_max_length=1024,
+    model_max_length=8192,
     padding_side="right",
     use_fast=False,
 )

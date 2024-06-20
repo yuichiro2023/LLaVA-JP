@@ -37,11 +37,11 @@ bash prepare_datasets/v0.sh
 ### Stage1(事前学習)
 シングルGPU
 ```
-bash scripts/pretrain/pretrain_tanuki_8b.sh
+bash scripts/pretrain/pretrain.sh configs/train/pretrain/tanuki-8b.json
 ```
 マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
 ```
-bash scripts/pretrain/pretrain_tanuki_8b_accelerate.sh
+bash scripts/pretrain/pretrain_accelerate.sh configs/train/pretrain/tanuki-8b.json
 ```
 
 ### Stage2(ファインチューニング)
@@ -49,11 +49,11 @@ bash scripts/pretrain/pretrain_tanuki_8b_accelerate.sh
 <br/>
 シングルGPU
 ```
-bash scripts/finetune/finetune_tanuki_8b.sh
+bash scripts/finetune/finetune.sh configs/train/finetune/tanuki-8b.json
 ```
 マルチGPU（./configs/accelerate_config_zero1.yamlを環境に合わせて変更）
 ```
-bash scripts/finetune/finetune_tanuki_8b_accelerate.sh
+bash scripts/finetune/finetune_accelerate.sh configs/train/finetune/tanuki-8b.json
 ```
 
 ### モデルのアップロード
@@ -63,11 +63,11 @@ bash scripts/finetune/finetune_tanuki_8b_accelerate.sh
 
 ## モデルの使い方
 - demo_llava_gradio.pyを使用することで入出力を試せる
-- model_pathにhuggingfaceのリポジトリ名を指定する必要がある
+- Enter model path: と表示されるので、huggingfaceのリポジトリ名入力
 - gradioがインストールされていれば、以下を実行し、localhost:7860などで画面にアクセスできる
 
 ```
-python demo_llava_gradio.py
+python upload_model.py ./path/to/local/folder your-username/your-repo-id
 ```
 
 <br/>
